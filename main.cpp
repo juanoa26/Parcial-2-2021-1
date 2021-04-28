@@ -185,13 +185,13 @@ void caso_4(void) {
 	cout<<"\nMETODO DE NEWTON " <<endl;
 	
 	intnewton i ({
-		dato(2.65,0.8115704),
-			dato(2.7,0.8079933),
-			dato(2.75,0.7823526),
-			dato(2.8,0.7354957),
-			dato(2.9,0.5839379),
-			dato(2.95,0.48323443),
-			dato(3,0.3692118),
+		dato(0.0, 1.0000000),
+		dato(0.05, 1.1318324),
+		dato(0.1, 1.2297984),
+		dato(0.15, 1.2978519),
+		dato(0.2, 1.401716),
+		dato(0.25, 1.3610330),
+		dato(0.3, 1.3646898)
 	});
 	cout<<"Coeficientes = ";
 	imprimir(i.polinomio());
