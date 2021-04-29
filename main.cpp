@@ -1,4 +1,6 @@
-#include<iostream>
+#include <cmath>
+#include <iostream>
+#include <iomanip>
 #include<vector>
 
 #include "regresionLineal.h"
@@ -7,6 +9,7 @@
 #include "intnewton.h"
 #include "rc.h"
 
+using namespace std;
 
 using std::cout;
 using std::cin;
@@ -17,6 +20,7 @@ void caso_1();
 void caso_2();
 void caso_3();
 void caso_4();
+void caso_5();
 
 int main (int argc, char *argv[]) {
 	
@@ -24,6 +28,7 @@ int main (int argc, char *argv[]) {
 	caso_2();
 	caso_3();
 	caso_4();
+	caso_5();
 	
 	return 0;
 }
@@ -154,6 +159,7 @@ void caso_3(void) {
 	
 	resultado_rc resultado = r.calcular(x, y);
 	
+	cout<<"\n--------------------------------------------------------------"<<endl;
 	cout<<"\nCASO 3: REGRESION CUADRATICA " <<endl;
 	
 	
@@ -178,34 +184,68 @@ void caso_3(void) {
 
 void caso_4(void) {
 	
-	void imprimir(vector<double>);
 	cout<<"--------------------------------------------------------------"<<endl;
 	cout<<"PARCIAL 2: PUNTO 2 INTERPOLACION "<<endl;
 	cout<<"--------------------------------------------------------------"<<endl;
 	cout<<"\nMETODO DE NEWTON " <<endl;
+	cout<<"\nCaso 1:"<<endl;
 	
-	intnewton i ({
-		dato(0.0, 1.0000000),
-		dato(0.05, 1.1318324),
-		dato(0.1, 1.2297984),
-		dato(0.15, 1.2978519),
-		dato(0.2, 1.401716),
-		dato(0.25, 1.3610330),
-		dato(0.3, 1.3646898)
-	});
-	cout<<"Coeficientes = ";
-	imprimir(i.polinomio());
-	cout<<"\nEstimacion = "
-	<<i.interpolar(2.73)<<endl;
+	setprecision(7);
+	n = 4;
+	double y[] = {1.0000000, 1.1318324, 1.2297984, 1.2978519};
+	double x[] = {0.0, 0.05, 0.1, 0.15};
+	b = new double[n];
+	
+	newton(y, x, n);
+	for (int i = 0; i < n; i++)
+	{
+		cout <<"Coeficientes: "
+		<< "A" << i << "= " << b[i] << endl;
+	}
+	
+	double toEvaluate = 0.08;
+	
+	
+	double answer = evaluate(toEvaluate, y, x, n);
+	cout << "\nEvaluacion en x= " << toEvaluate<< endl;
+	cout << "\nf(0.08)= " << answer << endl;
+	
+	double relativo;
+	double absoluto;
+	error_relativo = fabs((relativo - absoluto) / relativo);
+	//error_relativo = fabs((relativo - absoluto) / relativo);
+	cout << "\nError relativo R3 = " << error_relativo << endl;
+	cout << "Error absoluto: " << fabs(relativo - absoluto) << endl;
+}
+
+void caso_5(void) {
+
+	cout<<"--------------------------------------------------------------"<<endl;
+	cout<<"PARCIAL 2: PUNTO 2 INTERPOLACION "<<endl;
+	cout<<"--------------------------------------------------------------"<<endl;
+	cout<<"\nMETODO DE NEWTON " <<endl;
+	cout<<"\nCaso 2:"<<endl;
+	
+	setprecision(7);
+	n = 4;
+	double y[] = {1.1318324, 1.2297984, 1.2978519, 1.3401716};
+	double x[] = {0.05, 0.1, 0.15, 0.2};
+	b = new double[n];
+	
+	newton(y, x, n);
+	for (int i = 0; i < n; i++)
+	{
+		cout <<"Coeficientes: "
+			<< "A" << i << "= " << b[i] << endl;
+	}
+	
+	double toEvaluate = 0.08;
+	
+	
+	double answer = evaluate(toEvaluate, y, x, n);
+	cout << "\nEvaluacion en x= " << toEvaluate<< endl;
+	cout << "\nf(0.08)= " << answer << endl;
 	
 }
 
-void imprimir(vector<double> v){
-	for (int i = 0;i < v.size(); i++){
-		cout<<v[i]<<" ";
-	};
-}
-	
-
-	
 

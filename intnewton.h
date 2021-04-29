@@ -1,79 +1,50 @@
 #ifndef INTNEWTON_H
 #define INTNEWTON_H
 
-#include <vector>
+// interpolacion_newton.cpp : Defines the entry point for the console application.
+//
+#include <cmath>
+#include <iostream>
+#include <iomanip>
 
-using std::vector;
 
-struct dato{
-	double x;
-	double y;
-	
-	dato(double d_x, double d_y): x(d_x), y(d_y){
-	}
-};
+using std::cout;
+using std::endl;
 
-class intnewton{
-public:
-	intnewton (vector<dato> p_datos):datos(p_datos){
-		int n = datos.size();
-		vector<vector<double>> F;
-		F.resize(n);
-		for(int i = 0; i < n ;i++){
-			F[i].resize(n);
-		}
-		
-		//Rellenar primer columna
-		for(int i =0; i < n; i++){
-			F[i][0]=datos[i].y;
-		}
-		
-		for(int j =1; j < n;j++){
-			for(int i = 0;i < n-j ;i++){
-				F[i][j]=(F[i+1][j-1]-F[i][j-1])/(datos[i+j].x-datos[i].x);
-				
-			}
-		}
-		
-		coeficientes.resize(n);
-		for(int j=0;j<n;j++){
-			coeficientes[j]=F[0][j];
+int n;
+double x;
+double *b, error_relativo;
+
+//formula = (fx[0] - fx[1]) / (x[0] - x[1])
+void newton(double fx[], double x[], int n) {
+	for (int i = 0; i < n; i++)
+	{
+		b[i] = fx[0];
+		for (int j = 0; j < n; j++)
+		{
+			fx[j] = (fx[j+1] - fx[j]) / (x[j+i+1] - x[j]);
 		}
 	}
-	
-	vector<double> polinomio(){
-		return coeficientes;
+}
+
+double evaluate(double x, double fx[], double xi[], int n) {
+	double answer = b[0];
+	double term;
+	for (int i = 1; i < n; i++)
+	{
+		term = b[i];
+		for (int j = 0; j < i; j++)
+		{
+			term *= (x - xi[j]);
+		}
+		answer += term;
 	}
-		
-		double interpolar(double xint){
-			
-			int i,j;
-			int n=datos.size();
-			
-			double p = 0.0;
-			if(coeficientes.size()==0){
-				return p;
-			}
-			
-			//El vector de coeficientes contiene datos
-			p=coeficientes[0];
-			for(j=1;j<n;j++){
-				double bj= coeficientes[j];
-				double prod =1.0;
-				for(i=0;i<j;i++){
-					prod=prod*(xint-datos[i].x);
-				}
-				p = p + bj * prod;
-			}
-			return p;
-		} 
-			
-			double get_last_coefi(){
-				return coeficientes.back();
-			}
-				
-private:
-					vector<double> coeficientes;
-					vector<dato>datos;
-};
+	return answer;
+}
+
+void calculate_error(double real, double aprox) {
+	error_relativo = fabs((real - aprox) / real);
+	cout << "Error relativo: " << error_relativo << endl;
+	cout << "Error absoluto: " << fabs(real - aprox) << endl;
+}
 #endif
