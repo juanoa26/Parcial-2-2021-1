@@ -108,7 +108,9 @@ void caso_2(void) {
 	
 	regresion_Potencial rp(datos);
 	
-	cout<<"\n--------------------------------------------------------------"<<endl;
+	cout<<"--------------------------------------------------------------"<<endl;
+	cout<<"PARCIAL 2: PUNTO 1 REGRESION "<<endl;
+	cout<<"--------------------------------------------------------------"<<endl;
 	cout<<"\nCASO 2: REGRESION POTENCIAL " <<endl;
 	
 	//Calcular regresion
@@ -154,8 +156,9 @@ void caso_3(void) {
 	vector<double> x {120.00, 125.50, 136.50, 149.00, 159.00, 171.00, 187.00, 207.00, 272.00};
 	vector<double> y {1170, 1190, 1255, 1490, 1565, 1705, 1800, 1825, 1960};
 	
-	cout<<"\n--------------------------------------------------------------"<<endl;
-	rc r;
+	cout<<"--------------------------------------------------------------"<<endl;
+	cout<<"PARCIAL 2: PUNTO 1 REGRESION "<<endl;
+	cout<<"--------------------------------------------------------------"<<endl;	rc r;
 	
 	resultado_rc resultado = r.calcular(x, y);
 	
@@ -183,69 +186,91 @@ void caso_3(void) {
 
 
 void caso_4(void) {
-	
+		
 	cout<<"--------------------------------------------------------------"<<endl;
 	cout<<"PARCIAL 2: PUNTO 2 INTERPOLACION "<<endl;
 	cout<<"--------------------------------------------------------------"<<endl;
 	cout<<"\nMETODO DE NEWTON " <<endl;
 	cout<<"\nCaso 1:"<<endl;
 	
-	setprecision(7);
-	n = 4;
-	double y[] = {1.0000000, 1.1318324, 1.2297984, 1.2978519};
-	double x[] = {0.0, 0.05, 0.1, 0.15};
-	b = new double[n];
+	void imprimir(vector<double>);
+	double err1=-1;
+	intnewton i ({
+		
+		dato(0.0,1.0000000),
+		dato(0.05,1.1318324),
+		dato(0.1,1.2297984),
+		dato(0.15,1.2978519),
+		//dato(0.2, 1.3401716)	
+	});
 	
-	newton(y, x, n);
-	for (int i = 0; i < n; i++)
-	{
-		cout <<"Coeficientes: "
-		<< "A" << i << "= " << b[i] << endl;
-	}
+	cout<<setw(5)<<"\nCoeficientes: " <<setw(3);imprimir(i.polinomio());cout<<endl;
+	cout<<setw(5)<<"\Polinomio de interpolacion = " <<setw(3)<<i.interpolar(0.08)<<endl;
 	
-	double toEvaluate = 0.08;
-	
-	
-	double answer = evaluate(toEvaluate, y, x, n);
-	cout << "\nEvaluacion en x= " << toEvaluate<< endl;
-	cout << "\nf(0.08)= " << answer << endl;
-	
-	double relativo;
-	double absoluto;
-	error_relativo = fabs((relativo - absoluto) / relativo);
-	//error_relativo = fabs((relativo - absoluto) / relativo);
-	cout << "\nError relativo R3 = " << error_relativo << endl;
-	cout << "Error absoluto: " << fabs(relativo - absoluto) << endl;
+	intnewton iError ({
+		dato(0.0,1.0000000),
+		dato(0.05,1.1318324),
+		dato(0.1,1.2297984),
+		dato(0.15,1.2978519),
+		dato(0.2, 1.3401716)	
+
+	});
+	err1=iError.calcularError(0.08);
+	cout<<setw(5)<<"\nError de interpolacion R3 = "<<setw(3)<<err1<<endl;
+	cout<<endl;
 }
+
+void imprimir(vector<double> v){
+	for (int i = 0;i < v.size(); i++){
+		cout<<"A" <<i <<" = " << v [i] <<"  ";
+		
+	};
+}
+
 
 void caso_5(void) {
+		
+		cout<<"--------------------------------------------------------------"<<endl;
+		cout<<"PARCIAL 2: PUNTO 2 INTERPOLACION "<<endl;
+		cout<<"--------------------------------------------------------------"<<endl;
+		cout<<"\nMETODO DE NEWTON " <<endl;
+		cout<<"\nCaso 2:"<<endl;
+		
+		void imprimircaso2(vector<double>);
+		double err1=-1;
+		intnewton i ({
+			
+			//dato(0.0,1.0000000),
+			dato(0.05,1.1318324),
+			dato(0.1,1.2297984),
+			dato(0.15,1.2978519),
+			dato(0.2, 1.3401716),
+			//dato(0.25, 1.3610330)	
+		});
+		
+		cout<<setw(5)<<"\nCoeficientes: " <<setw(3);imprimircaso2(i.polinomio());cout<<endl;
+		cout<<setw(5)<<"\nPolinomio de interpolacion = " <<setw(3)<<i.interpolar(0.08)<<endl;
+		
+		intnewton iError ({
+			//dato(0.0,1.0000000),
+			dato(0.05,1.1318324),
+			dato(0.1,1.2297984),
+			dato(0.15,1.2978519),
+			dato(0.2, 1.3401716),
+			dato(0.25, 1.3610330)
 
-	cout<<"--------------------------------------------------------------"<<endl;
-	cout<<"PARCIAL 2: PUNTO 2 INTERPOLACION "<<endl;
-	cout<<"--------------------------------------------------------------"<<endl;
-	cout<<"\nMETODO DE NEWTON " <<endl;
-	cout<<"\nCaso 2:"<<endl;
-	
-	setprecision(7);
-	n = 4;
-	double y[] = {1.1318324, 1.2297984, 1.2978519, 1.3401716};
-	double x[] = {0.05, 0.1, 0.15, 0.2};
-	b = new double[n];
-	
-	newton(y, x, n);
-	for (int i = 0; i < n; i++)
-	{
-		cout <<"Coeficientes: "
-			<< "A" << i << "= " << b[i] << endl;
-	}
-	
-	double toEvaluate = 0.08;
-	
-	
-	double answer = evaluate(toEvaluate, y, x, n);
-	cout << "\nEvaluacion en x= " << toEvaluate<< endl;
-	cout << "\nf(0.08)= " << answer << endl;
-	
+		});
+		err1=iError.calcularError(0.08);
+		cout<<setw(5)<<"\nError de interpolacion R3 = "<<setw(3)<<err1<<endl;
+		cout<<endl;
 }
+	
+void imprimircaso2(vector<double> v){
+		for (int i = 0;i < v.size(); i++){
+		cout<<"A" <<i <<" = " << v [i] <<"  ";
+			
+	};
+}
+		
 
 
